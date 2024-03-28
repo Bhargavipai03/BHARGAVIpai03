@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Locker</title>
+    <!-- Linking the stylesheet -->
+    <link rel="stylesheet" href="webstyle2.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Student Locker</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="toggleSection('home')">Home</a></li>
+                <li><a href="#" onclick="toggleSection('profile')">Student Profile</a></li>
+                <li><a href="#" onclick="toggleSection('calculator')">Activity Points</a></li>
+                <li><a href="#" onclick="toggleSection('certificates')">Add Certificates</a></li>
+                <li><a href="#" onclick="toggleSection('progress')">Progress</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>HOME</h2>
+            <h3>
+                <p>Welcome to your student Locker home page.
+                    <br>
+                    <br>
+                     This is where you'll find general information and updates.
+        <br>
+
+                    This is the place where you can access all the resources and services that you need as a student of our institution. Whether you want to check your activity points, enroll in courses, upload certificates or communicate with your instructors and mentors, you can do it all here.
+                                </p>
+                    <p>
+                    How to use the Student Locker
+                    <br>
+                    To use the Student Portal, you need to log in with your student ID and password. If you don't have an account yet, you can create one by clicking on the "Register" button. Once you are logged in, you can navigate through the different sections of the portal using the menu bar at the top of the page.
+                                </p>
+            </h3>
+        </section>
+
+        <section id="profile" style="display: none;">
+            <h2>Student Profile</h2>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div>
+                <label for="usn">USN:</label>
+                <input type="text" id="usn" name="usn" placeholder="Enter your USN" required>
+            </div>
+            <div>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            
+            <div>
+                
+                <label for="branch">Branch:</label>
+                <input type="text" id="branch" name="branch" placeholder="Enter your branch" required>
+            </div>
+
+           
+            
+
+            <div>
+                <label for="division">Division:</label>
+                <input type="text" id="division" name="division" placeholder="Enter your division" required>
+            </div>
+            <div>
+                <button type="submit" onclick="updateProfile()">Update Profile</button>
+
+            </div>
+        </section>
+
+        <section id="calculator" style="display: none;">
+           <h2>Activity Points</h2>
+            <p>Calculate your activity points based on your participation in various events and activities.</p>
+            <div>
+                <label for="event1">Event 1 Points:</label>
+                <input type="number" id="event1" name="event1" min="0">
+            </div>
+            <div>
+                <label for="event2">Event 2 Points:</label>
+                <input type="number" id="event2" name="event2" min="0">
+            </div>
+            <div>
+                <label for="event3">Event 3 Points:</label>
+                <input type="number" id="event3" name="event3" min="0">
+            </div>
+            <div>
+                <button type="button" onclick="calculatePoints()">Calculate Total Points</button>
+            </div>
+            <div id="totalPoints"></div>
+        </section>
+
+        <section id="certificates" style="display: none;">
+            <h2>Add Certificates</h2>
+            <p>Upload certificates for the events and activities you have participated in.</p>
+            <input type="file" id="certificateFile" accept=".pdf, .jpg, .png">
+            <button type="button" onclick="uploadCertificate()">Upload Certificate</button>
+        </section>
+
+        <section id="progress" style="display: none;">
+            <div class="progress-container">
+                <div class="progress-bar" id="my-progress"></div>
+            </div>
+            <br>
+            <input type="number" id="user-input" placeholder="Enter the AICTE Activity Points Earned">
+            <br>
+
+            <button onclick="updateProgress()">Update Progress</button>
+        </section>
+
+    </main>
+
+    
+
+    <!-- JavaScript for responsive navigation -->
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('nav-menu_visible');
+        });
+
+        function toggleSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        function calculatePoints() {
+    const event1Points = parseInt(document.getElementById('event1').value) || 0;
+    const event2Points = parseInt(document.getElementById('event2').value) || 0;
+    const event3Points = parseInt(document.getElementById('event3').value) || 0;
+
+    const totalPoints = event1Points + event2Points + event3Points;
+    document.getElementById('totalPoints').innerHTML = `Total Points: ${totalPoints}`;
+}
+                                                
+        function uploadCertificate() {
+            const certificateFile = document.getElementById('certificateFile').files[0];
+            // Add code to handle file upload here
+            if(certificateFile)
+            alert('Certificate uploaded successfully!');
+        else
+            alert('Please Upload your certificate..');
+        }
+
+        function updateProfile() {
+    // Get form elements
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var usn = document.getElementById("usn").value;
+    var dob = document.getElementById("dob").value;
+    var branch = document.getElementById("branch").value;
+    var division = document.getElementById("division").value;
+
+    
+    // Construct object with form data
+    var formData = {
+        name: name,
+        email: email,
+        usn: usn,
+        dob: dob,
+        branch: branch,
+        division: division
+    };
+
+    // Save data to local storage
+    localStorage.setItem('studentProfile', JSON.stringify(formData));
+
+    
+
+
+    if(name && email && usn && dob && branch && division)
+    alert("Student Profile Updated successfully!");
+else
+    alert("Fill in the details");
+}
+
+
+           
+    function updateProgress() {
+        const progressBar = document.getElementById('my-progress');
+        const userInput = parseInt(document.getElementById('user-input').value);
+
+        if (!isNaN(userInput) && userInput >= 0 && userInput <= 100) {
+            progressBar.style.width = userInput + '%';
+        } else {
+            alert('Please enter a valid number between 0 and 100');
+        }
+    }
+    </script>
+    <footer>
+        <p>&copy; 2024 Student Locker</p>
+    </footer>
+</body>
+</html>
